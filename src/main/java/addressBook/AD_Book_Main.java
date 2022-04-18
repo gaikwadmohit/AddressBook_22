@@ -1,66 +1,74 @@
 package addressBook;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
-
+import java.util.Set;
 import addressBook.PersonContact;
 
+
 public class AD_Book_Main {
-	public void createContact() {
+	static Scanner sc = new Scanner(System.in);
+    static List<PersonContact> list = new LinkedList<PersonContact>();
 
-		PersonContact contact = new PersonContact();
-		Scanner sc = new Scanner(System.in);
+    //Created method for adding contact
+    public static void addContact()
+    {
+        System.out.println("Enter your firstName : ");
+        String firstName = sc.nextLine();
+        System.out.println("Enter your lastName : ");
+        String lastName = sc.nextLine();
+        System.out.println("Enter your address : ");
+        String address = sc.nextLine();
+        System.out.println("Enter your city : ");
+        String city = sc.nextLine();
+        System.out.println("Enter your state : ");
+        String state = sc.nextLine();
+        System.out.println("Enter your pin : ");
+        String pin = sc.nextLine();
+        System.out.println("Enter your MobileNo : ");
+        String MobileNo = sc.nextLine();
+        System.out.println("Enter your email : ");
+        String email = sc.nextLine();
+        PersonContact obj = new PersonContact(firstName, lastName, city, state, pin, MobileNo, email);
+        list.add(obj);
+    }
 
-		System.out.print("\nEnter First Name  : ");
-		String firstName = sc.nextLine();
-		contact.setFirstName(firstName);
 
-		System.out.print("\nEnter Last Name  : ");
-		String lastName = sc.nextLine();
-		contact.setLastName(lastName);
+    public static void editContact()
+    {
+        //Scanner sc = new Scanner(System.in);
+        System.out.println("Enter first name for confirmation : ");
+        String firstName = sc.nextLine();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getFirstName().equalsIgnoreCase(firstName))
+            {
+                list.remove(i);
+                addContact();
+                System.out.println("Successfully Edit data");
+            }
+            else {
+                System.out.println("No data found in Address Book");
+            }
+        }
+    }
 
-		System.out.print("\nEnter E-mail  : ");
-		String email = sc.nextLine();
-		contact.setEmail(email);
 
-		System.out.print("\nEnter Address  : ");
-		String address = sc.nextLine();
-		contact.setAddress(address);
+    public static void main(String[] args) {
 
-		System.out.print("\nEnter City  : ");
-		String city = sc.nextLine();
-		contact.setCity(city);
+    	AD_Book_Main addressBook = new AD_Book_Main();
+        //Displaying the welcome message
+        System.out.println("WELCOME TO ADDRESS BOOK PROBLEM");
+        //Adding new contact
+        System.out.println("Enter details of new contact");
+        addContact();
+        //Editing Contact
+        editContact();
 
-		System.out.print("\nEnter State  : ");
-		String state = sc.nextLine();
-		contact.setState(state);
-
-		System.out.print("\nEnter Phone Number  : ");
-		long phoneNo = sc.nextLong();
-		contact.setPhoneNo(phoneNo);
-
-		System.out.print("\nEnter Zip  : ");
-		int zip = sc.nextInt();
-		contact.setZip(zip);
-		showContact(contact);
-		sc.close();
-	}
-
-	public void showContact(PersonContact contact) {
-
-		System.out.print("\n-----------------");
-		System.out.print("\nFirst Name  : " + contact.getFirstName());
-		System.out.print("\nLast Name   : " + contact.getLastName());
-		System.out.print("\nAddress     : " + contact.getAddress());
-		System.out.print("\nCity        : " + contact.getCity());
-		System.out.print("\nState       : " + contact.getState());
-		System.out.print("\nPhone Number : " + contact.getPhoneNo());
-		System.out.print("\nE-mail      : " + contact.getEmail());
-		System.out.print("\nZip         : " + contact.getZip());
-	}
-
-	public static void main(String[] args) {
-
-		AD_Book_Main book = new AD_Book_Main();
-		book.createContact();
-	}
+        System.out.println(list); //printing list
+    }
 }
+     
