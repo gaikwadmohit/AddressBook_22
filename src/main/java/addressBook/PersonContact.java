@@ -2,39 +2,50 @@ package addressBook;
 
 public class PersonContact {
 	
-	public String firstname, lastname;
-    public String address, city, state;
-    public int zip;
-    public long phoneNumber;
-    public String email;
+	  //Initialize all the parameters
+    private String firstName;
+    private String lastName;
+    private String address;
+    private String city;
+    private String state;
+    private String zip;
+    private long phno;
+    private String email;
 
-    public PersonContact(String firstname, String lastname, String address, String city, String state, int zip, long phonenumber, String email) {
-        this.firstname = firstname;
-        this.lastname = lastname;
+    @Override
+    public String toString()
+    {
+        return "Contact [firstName: "+firstName+" , "+"lastName: "+lastName+" , "+"address: "+address+" , "+"city: "+city+" , "+
+                "state: "+state+" , "+"zip: "+zip+" , "+"phoneNo: "+phno+" , "+"email: "+email+ "]" ;
+    }
+
+    //called contact class for creating contacts with given details
+    public PersonContact(String firstName, String lastName, String address, String city, String state, String zip, long phoneNo, String email)
+    {
+        super();
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.address = address;
         this.city = city;
         this.state = state;
         this.zip = zip;
-        this.phoneNumber = phonenumber;
+        this.phno = phno;
         this.email = email;
     }
 
-     public PersonContact() {
+    /*getting and setting the firstName, lastName, address , city , state, zip , phone number, email*/
 
-     }
-
-    
     public String getFirstName() {
-        return firstname;
+        return firstName;
     }
     public void setFirstName(String firstName) {
-        this.firstname = firstName;
+        this.firstName = firstName;
     }
     public String getLastName() {
-        return lastname;
+        return lastName;
     }
     public void setLastName(String lastName) {
-        this.lastname = lastName;
+        this.lastName = lastName;
     }
     public String getAddress() {
         return address;
@@ -54,17 +65,17 @@ public class PersonContact {
     public void setState(String state) {
         this.state = state;
     }
-    public int getZip() {
+    public String getZip() {
         return zip;
     }
-    public void setZip(int zip) {
+    public void setZip(String zip) {
         this.zip = zip;
     }
     public long getPhoneNo() {
-        return phoneNumber;
+        return phno;
     }
     public void setPhoneNo(long phno) {
-        this.phoneNumber = phno;
+        this.phno = phno;
     }
     public String getEmail() {
         return email;
