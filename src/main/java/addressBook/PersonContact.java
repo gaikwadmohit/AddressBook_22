@@ -89,7 +89,5 @@ public class PersonContact {
 	        this.email = email;
 	    }
 
-	    protected void remove(PersonContact contacts) {
-
-	    }
+	  
 	}
