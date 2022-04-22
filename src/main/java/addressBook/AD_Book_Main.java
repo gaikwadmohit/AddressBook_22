@@ -8,179 +8,216 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.function.Predicate;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 
 public class AD_Book_Main {
-	
-	  public List<PersonContact> list = new ArrayList<>();
-	    Scanner scan = new Scanner(System.in);
+	  HashMap<String, LinkedList<PersonContact>> addressBooks = new HashMap<>();
+	    Scanner scanner = new Scanner(System.in);
+	    public static final String FILE_PATH = "C:\\Users\\MY PC\\Desktop//addressBook.txt";
 
-	    public void operation() {
-	        System.out.println("Enter Number of contact you want to add");
-	        int count = scan.nextInt();
-	        int contactCount = 1;
-	        while (contactCount <= count) {
+	    public PersonContact addContact() {
+	    	PersonContact contact = new PersonContact();
+	        LinkedList<PersonContact> allContacts = new LinkedList<PersonContact>();
+	        System.out.println("Enter First Name");
+	        contact.setFirstname(scanner.next());
+	        System.out.println("Enter last Name");
+	        contact.setLastname(scanner.next());
+	        System.out.println("Enter City");
+	        contact.setCity(scanner.next());
+	        System.out.println("Enter State");
+	        contact.setState(scanner.next());
+	        System.out.println("Enter Pincode");
+	        contact.setZipcode(scanner.nextInt());
+	        System.out.println("Enter Phone Number");
+	        contact.setPhonenumber(scanner.next());
+	        System.out.println("Enter Email");
+	        contact.setEmail(scanner.next());
+	        System.out.println("Enter Book name to which you have to add contact");
+	        String bookName = scanner.next();
 
-	            this.add();
-	            contactCount++;
+	        if (addressBooks.containsKey(bookName)) {
+	            LinkedList<PersonContact> contactList = addressBooks.get(bookName);
+	            addContactToExsistingBook(contact, bookName, contactList);
+	        } else {
+	            allContacts.add(contact);
+	            addressBooks.put(bookName, allContacts);
+	            System.out.println("New book created and Contact Added Sucessfully");
 	        }
-	        boolean status = true;
-	        do {
 
-	            System.out.println("Choose Operation you want to do");
-	            System.out.println("1. Add\t2.Edit\t3.Delete\t4.sortCity\t5.sortState\t6.show\t7.Count\t8.SortByName");
-
-	            switch (scan.nextInt()) {
-	                case 1:
-	                    add();
-	                    break;
-	                case 2:
-	                    edit();
-	                    break;
-	                case 3:
-	                    delete();
-	                    break;
-	                case 4:
-	                    sortCity();
-	                case 5:
-	                    sortState();
-	                case 6:
-	                    print();
-	                case 7:
-	                    countList();
-	                case 8:
-	                    sortByFirstName();
-	                default:
-	                    status = false;
-	            }
-	        } while (status);
+	        return contact;
 	    }
 
-	    public void add() {
-	    	PersonContact contacts = new PersonContact();
-	        System.out.println("Enter the First name:");
-	        String firstName = scan.next();
-	        contacts.setFirstName(firstName);
-
-	        System.out.println("Enter the Last name:");
-	        String lastName = scan.next();
-	        contacts.setLastName(lastName);
-
-	        System.out.println("Enter the address:");
-	        String address = scan.next();
-	        contacts.setAddress(address);
-
-	        System.out.println("Enter the City:");
-	        String city = scan.next();
-	        contacts.setCity(city);
-
-	        System.out.println("Enter the State:");
-	        String state = scan.next();
-	        contacts.setState(state);
-
-	        System.out.println("Enter the Zip:");
-	        Long zip = scan.nextLong();
-	        contacts.setZip(zip);
-
-	        System.out.println("Enter the Phone Number:");
-	        Long phoneNumber = scan.nextLong();
-	        contacts.setPhoneNumber(phoneNumber);
-
-	        System.out.println("Enter the Email");
-	        String email = scan.next();
-	        contacts.setEmail(email);
-	        this.list.add(contacts);
-	        print();
-	    }
-
-	    public void edit() {
-	        System.out.println("Enter your First name:");
-	        String firstName = scan.next();
-
-	        Iterator<PersonContact> iterator = this.list.listIterator();
-
-	        while (iterator.hasNext()) {
-	        	PersonContact contacts = iterator.next();
-
-	            if (firstName.equals(contacts.getFirstName())) {
-	                System.out.println("Choose field you want to add:");
-	                System.out.println("1.Last Name\t2.Address\t3.City\t4.State\t5. Zip\t6.Phone Number\t7.Email");
-	                switch (scan.nextInt()) {
-	                    case 1:
-	                        System.out.println("Re-Correct your Last Name");
-	                        contacts.setLastName(scan.next());
-	                        break;
-	                    case 2:
-	                        System.out.println("Re-Correct your Address");
-	                        contacts.setAddress(scan.next());
-	                        break;
-	                    case 3:
-	                        System.out.println("Re-Correct your City");
-	                        contacts.setCity(scan.next());
-	                        break;
-	                    case 4:
-	                        System.out.println("Re-Correct your State");
-	                        contacts.setState(scan.next());
-	                        break;
-	                    case 5:
-	                        System.out.println("Re-Correct your Zip");
-	                        contacts.setZip(scan.nextLong());
-	                        break;
-	                    case 6:
-	                        System.out.println("Re-Correct your Phone Number");
-	                        contacts.setPhoneNumber(scan.nextLong());
-	                    case 7:
-	                        System.out.println("Re-Correct your Email");
-	                        contacts.setEmail(scan.next());
+	    public boolean deleteContact(String phoneNumber, String bookName) {
+	        if (addressBooks.containsKey(bookName)) {
+	            LinkedList<PersonContact> contactList = addressBooks.get(bookName);
+	            for (PersonContact contact : contactList) {
+	                if (contact.getPhonenumber() == phoneNumber) {
+	                    contactList.remove(contact);
+	                    return operationStatus(true);
 	                }
-
 	            }
 	        }
+	        return operationStatus(false);
 	    }
 
-	    public void delete() {
-	        System.out.println("Enter your First name:");
-	        String firstName = scan.next();
-
-	        Iterator<PersonContact> iterator = list.listIterator();
-	        while (iterator.hasNext()) {
-	        	PersonContact contacts = iterator.next();
-
-	            if (firstName.equals(contacts.getFirstName())) {
-	                list.remove(contacts);
+	    public boolean editContact(String phoneNumber, String bookName) {
+	        if (addressBooks.containsKey(bookName)) {
+	            LinkedList<PersonContact> contactList = addressBooks.get(bookName);
+	            for (PersonContact contact : contactList) {
+	                if (contact.getPhonenumber() == phoneNumber) {
+	                    System.out.println("Enter First Name");
+	                    String firstName = scanner.next();
+	                    System.out.println("Enter last Name");
+	                    String lastName = scanner.next();
+	                    System.out.println("Enter address");
+	                    String address = scanner.next();
+	                    System.out.println("Enter City");
+	                    String city = scanner.next();
+	                    System.out.println("Enter State");
+	                    String state = scanner.next();
+	                    System.out.println("Enter zip");
+	                    String zip = scanner.next();
+	                    contact.setFirstname(firstName);
+	                    contact.setLastname(lastName);
+	                    contact.setCity(city);
+	                    contact.setState(state);
+	                    contact.setState(zip);
+	                    return operationStatus(true);
+	                }
 	            }
 	        }
+	        return operationStatus(false);
 	    }
 
-	    public void print() {
-	        Iterator<PersonContact> it = list.iterator();
-	        while (it.hasNext()) {
-	            System.out.println(it.next());
+	    public void displayContact() {
+	        addressBooks.entrySet().stream()
+	                .map(books -> books.getKey())
+	                .map(bookNames -> {
+	                    System.out.println(bookNames);
+	                    return addressBooks.get(bookNames);
+	                })
+	                .forEach(contactInBook -> System.out.println(contactInBook));
+	    }
+
+	    public int searchPerson(String searchKey) {
+	        int count = 0;
+	        for (String bookName : addressBooks.keySet()) {
+	            LinkedList<PersonContact> contactList = addressBooks.get(bookName);
+	            contactList.stream()
+	                    .filter(n -> n.getState() == searchKey || n.getCity() == searchKey)
+	                    .forEach(n -> System.out.println(n.getFirstname() + " " + n.getLastname()));
+	        }
+	        return count;
+	    }
+
+	    private static boolean operationStatus(boolean status) {
+	        if (status) {
+	            System.out.println("Operation  Successfully");
+	        } else {
+	            System.out.println("Contact not found");
+	        }
+	        return status;
+	    }
+
+	    private void addContactToExsistingBook(PersonContact contact, String bookName, LinkedList<PersonContact> contactList) {
+	        boolean isAlreadyExsist = contactList.stream()
+	                .anyMatch(contactsInlist -> contactsInlist.getFirstname() == contact.getFirstname());
+	        if (!(isAlreadyExsist)) {
+	            contactList.add(contact);
+	            addressBooks.put(bookName, contactList);
+	            System.out.println("New Contact Added Sucessfully");
+	        } else {
+	            System.out.println("Contact already exsists");
 	        }
 	    }
 
-	    public void countList() {
-	        Long total = list.stream().count();
-	        System.out.println(total);
+	    public void viewPerson(String viewKey) {
+	        for (String bookName : addressBooks.keySet()) {
+	            LinkedList<PersonContact> contactList = addressBooks.get(bookName);
+	            contactList.stream()
+	                    .filter(contact -> contact.getState() == viewKey || contact.getCity() == viewKey)
+	                    .forEach(contact -> System.out.println(contact));
+	        }
+
 	    }
 
-	    public void sortByFirstName() {
-	        Collections.sort(list, Sort.compareFirstName);
+	    public void sortContacts() {
+	        for (String bookName : addressBooks.keySet()) {
+	            LinkedList<PersonContact> contatct = addressBooks.get(bookName);
+	            contatct.stream().sorted(Comparator.comparing(PersonContact::getFirstname)).forEach(n -> System.out.println(n));
+	        }
 	    }
 
-	    public void sortCity() {
-	        Collections.sort(list, Sort.compareCity);
+	    public void sortBY(int sortByWhich) {
+	        switch (sortByWhich) {
+	            case 1:
+	                for (String bookName : addressBooks.keySet()) {
+	                    LinkedList<PersonContact> contatct = addressBooks.get(bookName);
+	                    contatct.stream().sorted(Comparator.comparing(PersonContact::getCity)).forEach(n -> System.out.println(n));
+	                }
+	                break;
+	            case 2:
+	                for (String bookName : addressBooks.keySet()) {
+	                    LinkedList<PersonContact> contatct = addressBooks.get(bookName);
+	                    contatct.stream().sorted(Comparator.comparing(PersonContact::getState)).forEach(n -> System.out.println(n));
+	                }
+	                break;
+	            case 3:
+	                for (String bookName : addressBooks.keySet()) {
+	                    LinkedList<PersonContact> contatct = addressBooks.get(bookName);
+	                    contatct.stream().sorted(Comparator.comparing(PersonContact::getZipcode)).forEach(n -> System.out.println(n));
+	                }
+	                break;
+	            default:
+	                System.out.println("Invalid Input");
+	                break;
+	        }
+
 	    }
 
-	    public void sortState() {
-	        Collections.sort(list, Sort.compareState);
+	    public void writingToFile() {
+	        checkFile();
+
+	        StringBuffer addressBookBuffer = new StringBuffer();
+	        addressBooks.entrySet().stream()
+	                .map(books -> books.getKey())
+	                .map(bookNames -> {
+	                    addressBookBuffer.append(bookNames + "\n");
+	                    return addressBooks.get(bookNames);
+	                })
+	                .forEach(contactInBook -> addressBookBuffer.append(contactInBook + "\n"));
+
+	        try {
+	            Files.write(Paths.get(FILE_PATH), addressBookBuffer.toString().getBytes());
+	            System.out.println("Written in the file \n\n");
+	        } catch (IOException e) {
+	            System.err.println("Problem encountered while writing into file");
+	        }
 	    }
 
-	    @Override
-	    public String toString() {
-	        return "AddressBook{" +
-	                "list=" + list +
-	                '}';
+	    public void readFile() {
+	        try {
+	            String contentOfFile = Files.readString(Paths.get(FILE_PATH));
+	            System.out.println(contentOfFile);
+	        } catch (IOException e) {
+	            System.err.println("Faced some problem while reading the file ");
+	        }
+	    }
+
+	    private void checkFile() {
+	        File file = new File(FILE_PATH);
+	        try {
+	            if (!file.exists()) {
+	                file.createNewFile();
+	                System.out.println("Created a file at " + FILE_PATH);
+	            }
+	        } catch (IOException e1) {
+	            System.err.println("Problem encountered while creating a file");
+	        }
 	    }
 	}
