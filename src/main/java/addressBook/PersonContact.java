@@ -96,9 +96,9 @@ public class PersonContact {
 				"\n Phone number : " + PhoneNo +
 				"\n Email : " + Email ;
 	}
-
-	public static void main(String[] args) {
-		PersonContact a = new PersonContact("nrupesh","mhatre","uran","navi mumbai","maharashtra",423345,1234567654,"nrup@gmail.com") ;
-		a.toString();
+public String toString() {
+		return "Contact [firstName=" + firstName + ", lastName=" + lastName + ", phoneNumber=" + phoneNumber
+				+ ", email=" + email + ", city=" + city + ", zip=" + zip + ", state=" + state + "]";
 	}
+
 }
