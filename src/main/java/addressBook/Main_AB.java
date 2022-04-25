@@ -1,95 +1,90 @@
 package addressBook;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 public class Main_AB {
-	public static void main(String[] args) {
+	 public static void main(String[] args) {
+	        AddressBookSystem addressBookSystem = new AddressBookSystem();
+	        int numOfBooks = 0;
 
-		Scanner userInput = new Scanner(System.in);
-		HashMap<String, AD_Book_Main> addressBooks = new HashMap<>();
-		AD_Book_Main book1 = new AD_Book_Main();
-		AD_Book_Main book2 = new AD_Book_Main();
-		AD_Book_Main book3 = new AD_Book_Main();
-		addressBooks.put("AddressBook1", book1);
-		addressBooks.put("AddressBook2", book2);
-		addressBooks.put("AddressBook3", book3);
-		System.out.println("Choose your Address Book => AddressBook(1)/ AddressBook(2)/ AddressBook(3)");
-		int chooseAddressBook = userInput.nextInt();
-		System.out.println("Choose your Address Book => Add/Edit/Delete/DuplicateEntry/SearchPerson");
-		while (chooseAddressBook >= 1) {
-			System.out.println(
-					"Enter Your Choice => Add Contacts (1)/Edit Contacts (2)/Delete Contacts (3)/ Check Duplicate Entry (4)/ Search person (5)");
-			int choice = userInput.nextInt();
-			switch (chooseAddressBook) {
-			case 1:
-				if (choice == 1) {
-					book1.AddContactsDetails();
-				} else if (choice == 2) {
-					book1.editContact();
-				} else if (choice == 3) {
-					book1.deleteContact();
-				} else if (choice == 4) {
-					book1.checkDuplicateEntry();
-				} else if (choice == 5) {
-					book1.searchPerson();
-				}
-				break;
-			case 2:
-				if (choice == 1) {
-					book2.AddContactsDetails();
-				} else if (choice == 2) {
-					book2.editContact();
-				} else if (choice == 3) {
-					book2.deleteContact();
-				} else if (choice == 4) {
-					book2.checkDuplicateEntry();
-				} else if (choice == 5) {
-					book2.searchPerson();
-				}
-				break;
-			case 3:
-				if (choice == 1) {
-					book3.AddContactsDetails();
-				} else if (choice == 2) {
-					book3.editContact();
-				} else if (choice == 3) {
-					book3.deleteContact();
-				} else if (choice == 4) {
-					book3.checkDuplicateEntry();
-				} else if (choice == 5) {
-					book3.searchPerson();
-				}
-				break;
-			default:
-				System.out.println("Give proper input");
-				break;
-			}
-			System.out.println("1) AddressBook 1");
-			System.out.println("2) AddressBook 2");
-			System.out.println("3) AddressBook 3");
-			System.out.println("0) Exit");
-			AD_Book_Main myobj = new AD_Book_Main();
-//			
-			try {
-				myobj.IO_File();
-			} catch (IOException e) {
-			
-				e.printStackTrace();
-			}
-			try {
-				myobj.JSON_File();
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-			chooseAddressBook = userInput.nextInt();
+	        System.out.println("****** Welcome to address book program ! ******");
+	        Scanner sc = new Scanner(System.in);
 
-		}
+	        AD_Book_Main currentBook;
+	        boolean exit1 = true;
+	        while (exit1) {
+	            System.out.println("Select option 1:Add address Book 2:open Address Book 3:search by city or state  4 : display users in city or state 5: count by city or state 6:exit");
+	            switch (sc.nextInt()) {
+	                case 1:
+	                    System.out.println("Enter the address book name");
+	                    String name = sc.next();
+	                    currentBook = new AD_Book_Main();
+	                    addressBookSystem.addressBooks.add(currentBook);
+	                    addressBookSystem.addressBookName[numOfBooks] = name;
+	                    numOfBooks++;
+	                    break;
+	                case 2:
+	                    System.out.println("The Address books available :");
+	                    for (int i = 0; i < numOfBooks; i++) {
+	                        System.out.println(addressBookSystem.addressBookName[i]);
+	                    }
+	                    System.out.println("Enter the name");
+	                    String book = sc.next();
+	                    int i = 0;
+	                    for (i = 0; i < numOfBooks; i++) {
+	                        if (addressBookSystem.addressBookName[i].equals(book)) break;
+	                    }
+	                    if (i == numOfBooks) {
+	                        System.out.println("name Not Found");
+	                        break;
+	                    }
+	                    currentBook = addressBookSystem.addressBooks.get(i);
+	                    addressBookSystem.addressMenu(currentBook);
+	                    break;
+	                case 3:
+	                    System.out.println("Select 1:search by city 2: search by state");
+	                    int option = sc.nextInt();
+	                    if (option == 1) {
+	                        System.out.println("enter city");
+	                        String city = sc.next();
+	                        System.out.println("enter firstName");
+	                        String firstName = sc.next();
+	                        addressBookSystem.searchByCity(city, firstName);
+	                    } else {
+	                        System.out.println("enter state");
+	                        String state = sc.next();
+	                        System.out.println("enter firstName");
+	                        String firstName = sc.next();
+	                        addressBookSystem.searchByState(state, firstName);
+	                    }
+	                    break;
+	                case 4:
+	                    System.out.println("Select 1: display persons in a city 2: display persons in a state");
+	                    if (sc.nextInt() == 1) {
+	                        System.out.println("Enter city name");
+	                        addressBookSystem.personsInCity(sc.next());
+	                    } else {
+	                        System.out.println("Enter state name");
+	                        addressBookSystem.personsInState(sc.next());
+	                    }
+	                    break;
+	                case 5:
+	                    System.out.println("Select 1: count by city    2: count by state");
+	                    if(sc.nextInt() == 1) {
+	                        System.out.println("Enter city name");
+	                        addressBookSystem.countByCity(sc.next());
+	                    }
+	                    else {
+	                        System.out.println("Enter state name");
+	                        addressBookSystem.countByState(sc.next());
+	                    }
+	                    break;
+	                default:
+	                    exit1 = false;
+
+	            }
+	        }
+	        sc.close();
+	    }
 	}
 
-}

@@ -1,104 +1,78 @@
 package addressBook;
 
 public class PersonContact {
-	private String FirstName;
-	private String LastName;
-	private String Address;
-	private String City;
-	private String State;
-	private int Zip;
-	private long PhoneNo;
-	private String Email;
-	public PersonContact(String first, String last, String add, String city, String state,
-			int zip, long phone, String email) {
-		this.FirstName = first;
-		this.LastName = last;
-		this.Address = add;
-		this.City = city;
-		this.State = state;
-		this.Zip = zip;
-		this.PhoneNo = phone;
-		this.Email = email;
-	}
-	public String getFirstName() {
-		return FirstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.FirstName = firstName;
-	}
-
-	public String getLastName() {
-		return LastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.LastName = lastName;
-	}
-
-	public String getAddress() {
-		return Address;
-	}
-
-	public void setAddress(String address) {
-		this.Address = address;
-	}
-
-	public String getCity() {
-		return City;
-	}
 	
-	public void setCity(String city) {
-		this.City = city;
-	}
-
-	public String getState() {
-		return State;
-	}
-
-	public void setState(String state) {
-		this.State = state;
-	}
-
-	public int getZip() {
-		return Zip;
-	}
-
-	public void setZip(int zip) {
-		this.Zip = zip;
-	}
-
-	public long getPhoneNo() {
-		return PhoneNo;
-	}
-
-	public void setPhoneNo(long phoneNo) {
-		this.PhoneNo = phoneNo;
-	}
-
-	public String getEmail() {
-		return Email;
-	}
-
-	public void setEmail(String email) {
-		this.Email = email;
-	}
+	  private String firstName;
+	    private String lastName;
+	    private String address;
+	    private String city;
+	    private String state;
+	    private String  phoneNumber;
+	    private int pinCode;
+	    private String email;
 
 
-	@Override
-	public String toString() {
-		return	"\n First name : " + FirstName + 
-				"\n Last name : " + LastName +
-				"\n Address : " + Address +
-				"\n City : " + City +
-				"\n State : " + State +
-				"\n Zip code : " + Zip +
-				"\n Phone number : " + PhoneNo +
-				"\n Email : " + Email ;
-	}
-public String toString() {
-		return "Contact [firstName=" + firstName + ", lastName=" + lastName + ", phoneNumber=" + phoneNumber
-				+ ", email=" + email + ", city=" + city + ", zip=" + zip + ", state=" + state + "]";
+	    //setters
+	    public void setFirstName(String firstName) {
+	        this.firstName = firstName;
+	    }
+	    public void setLastName(String lastName) {
+	        this.lastName = lastName;
+	    }
+	    public void setAddress(String address) {
+	        this.address = address;
+	    }
+	    public void setCity(String city) {
+	        this.city = city;
+	    }
+	    public void setState(String state) {
+	        this.state = state;
+	    }
+	    public void setPhoneNumber(String number) {
+	        this.phoneNumber = number;
+	    }
+	    public void setPinCode(int pinCode) {
+	        this.pinCode = pinCode;
+	    }
+	    public void setEmail(String email) {
+	        this.email = email;
+	    }
+
+
+
+	    //getters
+	    public String getFirstName() {
+	        return this.firstName;
+	    }
+	    public String getLastName() {
+	        return this.lastName;
+	    }
+	    public String getAddress() {
+	        return this.address;
+	    }
+	    public String getCity() {
+	        return this.city;
+	    }
+	    public String getState() {
+	        return this.state;
+	    }
+	    public String getPhoneNumber() {
+	        return this.phoneNumber;
+	    }
+	    public int getPinCode() {
+	        return this.pinCode;
+	    }
+	    public String getEmail() {
+	        return this.email;
+	    }
+
+	    @Override
+	    public boolean equals(Object object) {
+	        if(object == this)  return true;
+	        if(!(object instanceof PersonContact)) return false;
+	        PersonContact person1 = (PersonContact) object;
+	        return (this.firstName.equals(person1.firstName)  && this.lastName.equals(person1.lastName) && this.address.equals(person1.address) && this.city.equals(person1.city)
+	                && this.state.equals(person1.state) && this.phoneNumber.equals(person1.phoneNumber) && this.pinCode == person1.pinCode && this.email.equals(person1.email));
+	    }
 	}
 
-}
