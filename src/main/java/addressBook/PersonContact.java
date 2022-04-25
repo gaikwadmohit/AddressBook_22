@@ -1,106 +1,104 @@
 package addressBook;
 
 public class PersonContact {
-	 private String firstName;
-	    private String lastName;
-	    private String address;
-	    private String city;
-	    private String state;
-	    private Long zip;
-	    private Long phoneNumber;
-	    private String email;
-
-	    public PersonContact(String firstName, String lastName, String address, String city, String state, Long zip, Long phoneNumber, String email) {
-	        this.firstName = firstName;
-	        this.lastName = lastName;
-	        this.address = address;
-	        this.city = city;
-	        this.state = state;
-	        this.zip = zip;
-	        this.phoneNumber = phoneNumber;
-	        this.email = email;
-	    }
-
-	    public PersonContact() {
-	    }
-
-	    @Override
-	    public String toString() {
-	        return "Contacts{" +
-	                "firstName='" + firstName + '\'' +
-	                ", lastName='" + lastName + '\'' +
-	                ", address='" + address + '\'' +
-	                ", city='" + city + '\'' +
-	                ", state='" + state + '\'' +
-	                ", zip=" + zip +
-	                ", phoneNumber=" + phoneNumber +
-	                ", email='" + email + '\'' +
-	                '}';
-	    }
-
-
-	    public String getFirstName() {
-	        return firstName;
-	    }
-
-	    public void setFirstName(String firstName) {
-	        this.firstName = firstName;
-	    }
-
-	    public String getLastName() {
-	        return lastName;
-	    }
-
-	    public void setLastName(String lastName) {
-	        this.lastName = lastName;
-	    }
-
-	    public String getAddress() {
-	        return address;
-	    }
-
-	    public void setAddress(String address) {
-	        this.address = address;
-	    }
-
-	    public String getCity() {
-	        return city;
-	    }
-
-	    public void setCity(String city) {
-	        this.city = city;
-	    }
-
-	    public String getState() {
-	        return state;
-	    }
-
-	    public void setState(String state) {
-	        this.state = state;
-	    }
-
-	    public Long getZip() {
-	        return zip;
-	    }
-
-	    public void setZip(Long zip) {
-	        this.zip = zip;
-	    }
-
-	    public Long getPhoneNumber() {
-	        return phoneNumber;
-	    }
-
-	    public void setPhoneNumber(Long phoneNumber) {
-	        this.phoneNumber = phoneNumber;
-	    }
-
-	    public String getEmail() {
-	        return email;
-	    }
-
-	    public void setEmail(String email) {
-	        this.email = email;
-	    }
-
+	private String FirstName;
+	private String LastName;
+	private String Address;
+	private String City;
+	private String State;
+	private int Zip;
+	private long PhoneNo;
+	private String Email;
+	public PersonContact(String first, String last, String add, String city, String state,
+			int zip, long phone, String email) {
+		this.FirstName = first;
+		this.LastName = last;
+		this.Address = add;
+		this.City = city;
+		this.State = state;
+		this.Zip = zip;
+		this.PhoneNo = phone;
+		this.Email = email;
 	}
+	public String getFirstName() {
+		return FirstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.FirstName = firstName;
+	}
+
+	public String getLastName() {
+		return LastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.LastName = lastName;
+	}
+
+	public String getAddress() {
+		return Address;
+	}
+
+	public void setAddress(String address) {
+		this.Address = address;
+	}
+
+	public String getCity() {
+		return City;
+	}
+	
+	public void setCity(String city) {
+		this.City = city;
+	}
+
+	public String getState() {
+		return State;
+	}
+
+	public void setState(String state) {
+		this.State = state;
+	}
+
+	public int getZip() {
+		return Zip;
+	}
+
+	public void setZip(int zip) {
+		this.Zip = zip;
+	}
+
+	public long getPhoneNo() {
+		return PhoneNo;
+	}
+
+	public void setPhoneNo(long phoneNo) {
+		this.PhoneNo = phoneNo;
+	}
+
+	public String getEmail() {
+		return Email;
+	}
+
+	public void setEmail(String email) {
+		this.Email = email;
+	}
+
+
+	@Override
+	public String toString() {
+		return	"\n First name : " + FirstName + 
+				"\n Last name : " + LastName +
+				"\n Address : " + Address +
+				"\n City : " + City +
+				"\n State : " + State +
+				"\n Zip code : " + Zip +
+				"\n Phone number : " + PhoneNo +
+				"\n Email : " + Email ;
+	}
+
+	public static void main(String[] args) {
+		PersonContact a = new PersonContact("nrupesh","mhatre","uran","navi mumbai","maharashtra",423345,1234567654,"nrup@gmail.com") ;
+		a.toString();
+	}
+}
