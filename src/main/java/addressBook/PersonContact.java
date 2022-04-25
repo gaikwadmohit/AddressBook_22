@@ -2,13 +2,21 @@ package addressBook;
 
 public class PersonContact {
 	
-	  private String firstName;
+	 @CsvBindByName
+	    private String firstName;
+	    @CsvBindByName
 	    private String lastName;
+	    @CsvBindByName
 	    private String address;
+	    @CsvBindByName
 	    private String city;
+	    @CsvBindByName
 	    private String state;
-	    private String  phoneNumber;
+	    @CsvBindByName
+	    private String phoneNumber;
+	    @CsvBindByName
 	    private int pinCode;
+	    @CsvBindByName
 	    private String email;
 
 
@@ -74,5 +82,11 @@ public class PersonContact {
 	        return (this.firstName.equals(person1.firstName)  && this.lastName.equals(person1.lastName) && this.address.equals(person1.address) && this.city.equals(person1.city)
 	                && this.state.equals(person1.state) && this.phoneNumber.equals(person1.phoneNumber) && this.pinCode == person1.pinCode && this.email.equals(person1.email));
 	    }
-	}
 
+	    @Override
+	    public String toString() {
+	        return "firstName: "+this.getFirstName()+", SecondName: "+ this.getLastName()+", Address: "+ this.getAddress() + ", City: "+this.getCity() +", State: "+this.getState()+
+	                ", Pincode: "+this.getPinCode()+", Phone number: "+this.getPhoneNumber()+", email: "+this.getEmail();
+	    }
+
+	}

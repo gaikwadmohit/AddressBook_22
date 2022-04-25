@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class AddressBookSystem {
 
-	  public static List<AD_Book_Main> addressBooks = new LinkedList<AD_Book_Main>();
+	 public static List<AD_Book_Main> addressBooks = new LinkedList<AD_Book_Main>();
 	    public static String[] addressBookName = new String[10];
 
 
@@ -22,18 +22,42 @@ public class AddressBookSystem {
 	        int option = 0;
 	        boolean exit = true;
 	        while(exit) {
-	            System.out.println("Select option 1: add user.  2: edit existing user.  3: display all users 4:Delete contact. 5:Switch Address Book");
+	            System.out.println("Select option 1: add user.  2: edit existing user.  3: display all users 4:Delete contact. 5: sortby name   8:Switch Address Book");
 	            option  = sc.nextInt();
 	            switch(option) {
 	                case 1 :
-	                    addressBook.addPerson();
+	                    PersonContact person = intake();
+	                    System.out.println(" select 1: add to list 2: add to txt file 3: add to csv file");
+	                    switch(sc.nextInt()) {
+	                        case 1:
+	                            addressBook.addPerson(person, IOService.LIST_DS_IO);
+	                            break;
+	                        case 2:
+	                            addressBook.addPerson(person, IOService.TXT_FILE_IO);
+	                            break;
+	                        case 3:
+	                            addressBook.addPerson(person, IOService.CSV_IO);
+	                            break;
+	                    }
+
 	                    break;
 	                case 2 :
 	                    System.out.println("Enter the user name to edit");
 	                    addressBook.editPerson(sc.next());
 	                    break;
 	                case 3:
-	                    addressBook.display();
+	                    System.out.println(" select 1: display from list 2: display from txt file 3: display from CSV file");
+	                    switch(sc.nextInt()) {
+	                        case 1:
+	                            addressBook.readData(IOService.LIST_DS_IO);
+	                            break;
+	                        case 2:
+	                            addressBook.readData(IOService.TXT_FILE_IO);
+	                            break;
+	                        case 3:
+	                            addressBook.readData(IOService.CSV_IO);
+	                            break;
+	                    }
 	                    break;
 	                case 4:
 	                    System.out.println("Enter name");
@@ -134,5 +158,4 @@ public class AddressBookSystem {
 	        person1.setEmail(sc.next());
 	        return person1;
 	    }
-	
-}
+	}

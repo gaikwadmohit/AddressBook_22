@@ -1,17 +1,28 @@
 package addressBook;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Scanner;
 import java.util.function.Predicate;
+
+
 
 public class AD_Book_Main {
 	
-	 public static String FILE_NAME = "AddressBook-file.txt";
+	 public static String CSV_FILE_NAME = "AddressBook-file.csv";
+	    public static String TXT_FILE_NAME = "AddressBook-file.txt";
 	    public static ArrayList<PersonContact> referenceBook;
-	    public  HashMap<String, ArrayList<PersonContact>> personsByCity = new HashMap<String, ArrayList<PersonContact>>();
+	    public HashMap<String, ArrayList<PersonContact>> personsByCity = new HashMap<String, ArrayList<PersonContact>>();
 	    public  HashMap<String, ArrayList<PersonContact>> personsByState = new HashMap<String, ArrayList<PersonContact>>();
 	    private int numOfContacts = 0;
 	    static long count = 0;
@@ -19,18 +30,6 @@ public class AD_Book_Main {
 	        clearCSV();
 	        referenceBook = new ArrayList<PersonContact>();
 	    }
-
-	    private void clearCSV() {
-	        try {
-	            Files.deleteIfExists(Paths.get(FILE_NAME));
-	            File file = new File(FILE_NAME);
-	            file.createNewFile();
-	        }
-	        catch(IOException e) {
-	            e.printStackTrace();
-	        }
-	    }
-
 
 	    public void addPerson(PersonContact person , IOService type) {
 	        if(type.equals(IOService.LIST_DS_IO)) {
@@ -47,17 +46,13 @@ public class AD_Book_Main {
 	            }
 	        }
 	        else if(type.equals(IOService.TXT_FILE_IO)){
-	            System.out.println("writing addressBook to a file ");
-	            StringBuffer sb = new StringBuffer();
-	            try {
-	                Files.lines(Paths.get(FILE_NAME))
-	                        .map(contact -> contact.trim())
-	                        .forEach(contact -> sb.append(contact.toString().concat("\n")));
-	                sb.append(person.toString());
-	                Files.write(Paths.get(FILE_NAME),sb.toString().getBytes());
-	            } catch(IOException e) {
-	                e.printStackTrace();
-	            }
+	            TxtFileIOServiceProvider fileIO = new TxtFileIOServiceProvider();
+	            fileIO.writeData(person, TXT_FILE_NAME);
+	        }
+
+	        else if(type.equals(IOService.CSV_IO)) {
+	            OpenCSVServiceProvider csvIO = new OpenCSVServiceProvider();
+	            csvIO.writeData(person, CSV_FILE_NAME);
 	        }
 
 	    }
@@ -72,20 +67,16 @@ public class AD_Book_Main {
 	            });
 	        }
 	        else if(type.equals(IOService.TXT_FILE_IO)) {
-	            try {
-	                Files.lines(Paths.get(FILE_NAME))
-	                        .map(contact -> contact.trim())
-	                        .forEach(contact -> {
-	                            System.out.println(contact);
-	                            count++;
-	                        });
-	            }
-	            catch(IOException e) {
-	                e.printStackTrace();
-	            }
+	            TxtFileIOServiceProvider fileIO = new TxtFileIOServiceProvider();
+	            count  = fileIO.readData(TXT_FILE_NAME);
+	        }
+	        else if(type.equals(IOService.CSV_IO)) {
+	            OpenCSVServiceProvider csvIO = new OpenCSVServiceProvider();
+	            count  = csvIO.readData(CSV_FILE_NAME);
 	        }
 	        return count;
 	    }
+
 
 	    public void searchByCity(String city,String firstName) {
 	        Predicate<PersonContact> searchPerson = (contact -> contact.getCity().equals(city)&& contact.getFirstName().equals(firstName));
@@ -111,9 +102,7 @@ public class AD_Book_Main {
 
 	        return (personsByCity.get(city)==null)?0:personsByCity.get(city).size();
 	    }
-
 	    public int countByState(String state) {
-
 	        return personsByState.get(state)==null?0:personsByState.get(state).size();
 	    }
 
@@ -130,7 +119,7 @@ public class AD_Book_Main {
 	        referenceBook.add(intake());
 	    }
 
-	    public void display() {
+	    public static void display() {
 	        Scanner sc = new Scanner(System.in);
 	        PersonContact person = null;
 	        System.out.println("Persons present in the address book:");
@@ -208,6 +197,8 @@ public class AD_Book_Main {
 	        System.out.println("Phone nmber : "+person.getPhoneNumber() );
 	        System.out.println("email : "+person.getEmail());
 	    }
+
+
 	    public  void sortByFirstName() {
 	        referenceBook.stream()
 	                .sorted((contact1,contact2) -> contact1.getFirstName().compareTo(contact2.getFirstName()))
@@ -229,6 +220,18 @@ public class AD_Book_Main {
 	                .forEach(System.out::println);
 	    }
 
-	    public void addPerson() {
+
+	    public static void clearCSV() {
+	        try {
+	            Files.deleteIfExists(Paths.get(TXT_FILE_NAME));
+	            Files.deleteIfExists(Paths.get(CSV_FILE_NAME));
+	            File file = new File(TXT_FILE_NAME);
+	            file.createNewFile();
+	            file = new File(CSV_FILE_NAME);
+	            file.createNewFile();
+	        }
+	        catch(IOException e) {
+	            e.printStackTrace();
+	        }
 	    }
-}
+	}

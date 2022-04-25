@@ -81,6 +81,29 @@ import addressBook.PersonContact;
 	        Assert.assertEquals(2,size);
 	    }
 	
-	
+	    @Test
+	    public void givenAContact_WhenAddedToCSVFile_ShouldReturnCorrectSize() {
+	    	AD_Book_Main addressBook = new AD_Book_Main();
+	        addressBook.addPerson(person1, IOService.CSV_IO);
+	        addressBook.addPerson(person2, IOService.CSV_IO);
+	        long size = 0;
+	        try {
+	            size = Files.lines(Paths.get("AddressBook-file.csv")).count();
+	        }
+	        catch(Exception e) {
+	            e.printStackTrace();
+	        }
+	        Assert.assertEquals(2,size-1);
+	    }
 
-}
+	    @Test
+	    public void whenCalled_ReadFromCSVMethod_ShouldPrintFile() {
+	       AD_Book_Main addressBook = new AD_Book_Main();
+	        addressBook.addPerson(person1, IOService.CSV_IO);
+	        addressBook.addPerson(person2, IOService.CSV_IO);
+	        long size  = addressBook.readData(IOService.CSV_IO);
+	        Assert.assertEquals(2,size);
+	    }
+	}
+
+
