@@ -21,22 +21,22 @@ import addressBook.PersonContact;
 	        person1 = new PersonContact();
 	        person1.setFirstName("Mohit");
 	        person1.setLastName("Gaikwad");
-	        person1.setAddress("Sangli");
-	        person1.setCity("Pune");
+	        person1.setAddress("Nagpur");
+	        person1.setCity("Nagpur");
 	        person1.setState("Maharashtra");
 	        person1.setPinCode(411043);
 	        person1.setPhoneNumber("8830602356");
 	        person1.setEmail("mohitgaikwad@gmail.com");
 
 	        person2 = new PersonContact();
-	        person2.setFirstName("Rajendra");
-	        person2.setLastName("Gund");
-	        person2.setAddress("Shirdi");
+	        person2.setFirstName("Monu");
+	        person2.setLastName("Sonu");
+	        person2.setAddress("Nagpur");
 	        person2.setCity("Ahmednagar");
 	        person2.setState("Maharashtra");
 	        person2.setPinCode(416307);
 	        person2.setPhoneNumber("8856043932");
-	        person2.setEmail("rajendra@gmail.com");
+	        person2.setEmail("abc@gmail.com");
 	    }
 
 
