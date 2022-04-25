@@ -1,5 +1,5 @@
 package addressBook;
-
+import com.opencsv.bean.CsvBindByName;
 public class PersonContact {
 	
 	 @CsvBindByName

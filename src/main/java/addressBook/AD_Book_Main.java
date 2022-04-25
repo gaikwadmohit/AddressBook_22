@@ -21,6 +21,8 @@ public class AD_Book_Main {
 	
 	 public static String CSV_FILE_NAME = "AddressBook-file.csv";
 	    public static String TXT_FILE_NAME = "AddressBook-file.txt";
+	    public static String JSON_FILE_NAME = "AddressBook-file.json";
+	    
 	    public static ArrayList<PersonContact> referenceBook;
 	    public HashMap<String, ArrayList<PersonContact>> personsByCity = new HashMap<String, ArrayList<PersonContact>>();
 	    public  HashMap<String, ArrayList<PersonContact>> personsByState = new HashMap<String, ArrayList<PersonContact>>();
@@ -74,7 +76,11 @@ public class AD_Book_Main {
 	            OpenCSVServiceProvider csvIO = new OpenCSVServiceProvider();
 	            count  = csvIO.readData(CSV_FILE_NAME);
 	        }
-	        return count;
+	        else if(type.equals(IOService.JSON_IO)) {
+	            JsonServiceProvider jsonIO = new JsonServiceProvider();
+	            count  = jsonIO.readData(JSON_FILE_NAME);
+	        }
+	       return count;
 	    }
 
 
@@ -222,16 +228,19 @@ public class AD_Book_Main {
 
 
 	    public static void clearCSV() {
-	        try {
-	            Files.deleteIfExists(Paths.get(TXT_FILE_NAME));
-	            Files.deleteIfExists(Paths.get(CSV_FILE_NAME));
-	            File file = new File(TXT_FILE_NAME);
-	            file.createNewFile();
-	            file = new File(CSV_FILE_NAME);
-	            file.createNewFile();
-	        }
-	        catch(IOException e) {
-	            e.printStackTrace();
-	        }
+	    	try{ 
+	    		Files.deleteIfExists(Paths.get(TXT_FILE_NAME));
+            Files.deleteIfExists(Paths.get(CSV_FILE_NAME));
+            Files.deleteIfExists(Paths.get(JSON_FILE_NAME));
+            File file = new File(TXT_FILE_NAME);
+            file.createNewFile();
+            file = new File(CSV_FILE_NAME);
+            file.createNewFile();
+            file = new File(JSON_FILE_NAME);
+            file.createNewFile();
+        }
+        catch(IOException e) {
+            e.printStackTrace();
+        }
 	    }
 	}
