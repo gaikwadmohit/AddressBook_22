@@ -1,2 +1,3 @@
-firstName: Sushant, SecondName: Lad, Address: Sangli, City: Pune, State: Maharashtra, Pincode: 411043, Phone number: 8830602356, email: sushantlad@gmail.com
-firstName: ankith, SecondName: kumar, Address: bengaluru, City: bengalurur, State: karnataka, Pincode: 560050, Phone number: 7894561239, email: ajsdlaksd@gmail.com
+ADDRESS,CITY,EMAIL,FIRSTNAME,LASTNAME,PHONENUMBER,PINCODE,STATE
+Dattnagar,Nagpur,mbg@gmail.com,Mohit,Gaikwad,8830602356,411043,maharashtra
+Saniwarpeth,pune,abc@gmail.com,Swapnil,Gaikwad,9096420921,416416,maharashtra
